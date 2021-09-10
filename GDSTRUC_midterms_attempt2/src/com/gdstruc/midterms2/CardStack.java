@@ -4,7 +4,6 @@ import java.util.Stack;
 
 public class CardStack {
 
-    private Stack<Card> stack;
     private static Stack<Main> cardDeck;
     private static Stack<Main> PlayerHand;
     private static Stack<Main> PlayerPile;

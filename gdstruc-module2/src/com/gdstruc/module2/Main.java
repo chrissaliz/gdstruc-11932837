@@ -9,6 +9,7 @@ public class Main {
         Player asuna = new Player(1, "Asuna", 100);
         Player lethalBacon = new Player(2, "LethalBacon", 205);
         Player hpDeskjet = new Player(3, "HpDeskJet", 34);
+        Player alucard = new Player (3, )
 
         playerLinkList playerLinkList = new playerLinkList();
 
