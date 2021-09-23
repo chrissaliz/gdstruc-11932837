@@ -12,17 +12,7 @@ public class Main {
         Stack<String> CardDeck = new Stack<>();
         Stack<String> PlayerHand = new Stack<>();
         Stack<String> PlayerPile = new Stack<>();
-
-        /*CardDeck.push("Dracula");
-        CardDeck.push("Alucard");
-        CardDeck.push("Trevor Belmont");
-        CardDeck.push("Sypha Belnades");
-        CardDeck.push("Hector");
-        CardDeck.push("Isaac");
-        CardDeck.push("Carmilla");
-        CardDeck.push("Lisa Tepes");
-        CardDeck.push("Death");
-        CardDeck.push("Godbrand");*/
+        
 
         int DeckSize = 3;
 
@@ -48,24 +38,22 @@ public class Main {
         System.out.print(PlayerPile);
 
 
-        /*CardDeck.pop();
-        System.out.print("PoppedDeck:");
-        System.out.print(CardDeck);*/
-
-
         Random rand = new Random();
         int gacha = rand.nextInt(3 + 1);
 
-        Random rand2 = new Random();
-        int numberofCards = rand.nextInt(5) + 1;
-
-            /*public static void printGacha() {
-                System.out.println("You have drawn" + numberofCards + "cards.");
-            }*/
 
         /*public static void runGacha( idk what to put here but i need it to read the CardDeck, PlayerHand, and PlayerPile...??
         if that's possible.......) {*/
+        while (CardDeck.size() > 0) {
+            Random rand2 = new Random();
+            int numberofCards = rand2.nextInt(5);
+
             if (gacha == 1) { //draw card from carddeck into playerhand
+
+                if(CardDeck.isEmpty() || numberofCards > CardDeck.size()) {
+                    System.out.println("Cannot draw card.");
+                    return;
+                }
 
                 for (int x = 0; x < numberofCards; x++) {
                     PlayerHand.push(CardDeck.pop());
@@ -112,10 +100,12 @@ public class Main {
                 System.out.println("Number of discarded Cards: " + PlayerPile.size());
                 System.out.print(PlayerPile);
             }
+        }
 
             if (CardDeck.size() == 0) {
                 System.out.println("No more cards to draw.");
             }
+
 
         System.out.println("Run again? Press 1 for yes, 0 for no.");
         Scanner UserInput = new Scanner(System.in);
