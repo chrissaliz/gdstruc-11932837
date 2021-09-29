@@ -13,7 +13,6 @@ public class Main {
         Stack<String> PlayerHand = new Stack<>();
         Stack<String> PlayerPile = new Stack<>();
 
-
         int DeckSize = 3;
 
         for (int a = 0; a < DeckSize; a++) {
@@ -30,28 +29,38 @@ public class Main {
         }
 
         while (CardDeck.size() > 0) {
-            GameTurn(CardDeck, PlayerHand, PlayerPile,int numberofCards);
+            GameTurn(CardDeck, PlayerHand, PlayerPile, numberofCards());
+            System.out.println("Run again? Press 1 for yes, 0 for no.");
+            Scanner UserInput = new Scanner(System.in);
+
+            int input = UserInput.nextInt();
+            if (UserInput.equals("1")) {
+                GameTurn(PlayerHand, PlayerPile, CardDeck, numberofCards());
+            } else if (UserInput.equals("0")) {
+                System.out.println("System ended.");
+                break;
+            }
         }
     }
 
     public static void GachaInfo(Stack<String> CardDeck, Stack<String> PlayerHand, Stack<String> PlayerPile) {
         System.out.println("Number of Cards left: " + CardDeck.size());
-        System.out.print(CardDeck);
-        System.out.println("Number of Cards in Player Hand: " + PlayerHand.size());
-        System.out.print(PlayerHand);
-        System.out.println("Number of discarded Cards: " + PlayerPile.size());
-        System.out.print(PlayerPile);
+        System.out.print("\nCards left:" + CardDeck);
+        System.out.println("\n \n Number of Cards in Player Hand: " + PlayerHand.size());
+        System.out.print("\nCards in Player Hand:" + PlayerHand);
+        System.out.println("\n \n Number of discarded Cards: " + PlayerPile.size());
+        System.out.print("\nDiscarded cards:" + PlayerPile);
     }
 
     public static void GameTurn(Stack CardDeck, Stack PlayerHand, Stack PlayerPile, int numberofCards) {
         Random rand = new Random();
-        int gacha = rand.nextInt(3 + 1);
+        int gacha = rand.nextInt(3);
 
-        if (gacha == 1) {
+        if (gacha == 0) {
             drawCard(CardDeck, PlayerHand, PlayerPile, numberofCards);
-        } else if (gacha == 2) {
+        } else if (gacha == 1) {
             disCard(CardDeck, PlayerHand, PlayerPile, numberofCards);
-        } else if (gacha == 3) {
+        } else if (gacha == 2) {
             retrieveCard(CardDeck, PlayerHand, PlayerPile, numberofCards);
         }
     }
@@ -67,6 +76,9 @@ public class Main {
 
         if (CardDeck.isEmpty() || numberofCards > CardDeck.size()) {
             System.out.println("Cannot draw card.");
+            return;
+        } else if (numberofCards() > CardDeck.size()) {
+            System.out.println("Number of cards to be drawn is greater than Card Deck. Adjusting...");
             return;
         }
 
@@ -84,10 +96,14 @@ public class Main {
         if (PlayerHand.isEmpty()) {
             System.out.println("Player's Hand is empty.");
             return;
+        } else if (numberofCards() > PlayerHand.size() || numberofCards() > CardDeck.size()) {
+            System.out.println("Number of cards to be discarded is greater than Player Hand. Adjusting...");
+            return;
         }
         for (int x = 0; x < numberofCards; x++) {
             PlayerPile.push(PlayerHand.pop());
         }
+        System.out.println("You have discarded " + numberofCards + " cards.");
         GachaInfo(CardDeck, PlayerHand, PlayerPile);
     }
 
@@ -95,92 +111,14 @@ public class Main {
         if (PlayerPile.isEmpty()) { //retrieve card from pile
             System.out.println("Discarded pile is empty.");
             return;
+        } else if (numberofCards() > PlayerPile.size() || numberofCards() > CardDeck.size()) {
+            System.out.println("Number of cards to be retrieved is greater than Player Pile. Adjusting...");
+            return;
         }
         for (int x = 0; x < numberofCards; x++) {
             PlayerHand.push(PlayerPile.pop());
         }
+        System.out.println("You have retrieved " + numberofCards + " cards.");
         GachaInfo(CardDeck, PlayerHand, PlayerPile);
     }
-
 }
-
-
-
-    /*public static void runGacha(Stack<String> CardDeck, Stack<String> PlayerHand, Stack<String> PlayerPile) {
-        while (CardDeck.size() > 0) {
-
-
-            Random rand2 = new Random();
-            int numberofCards = rand2.nextInt(5);
-
-            if (gacha == 1) { //draw card from carddeck into playerhand
-
-                if (CardDeck.isEmpty() || numberofCards > CardDeck.size()) {
-                    System.out.println("Cannot draw card.");
-                    return;
-                }
-
-                for (int x = 0; x < numberofCards; x++) {
-                    PlayerHand.push(CardDeck.pop());
-                }
-
-                System.out.println("You have drawn " + numberofCards + " cards.");
-                System.out.println("Number of Cards left: " + CardDeck.size());
-                System.out.print(CardDeck);
-                System.out.println("Number of Cards in Player Hand: " + PlayerHand.size());
-                System.out.print(PlayerHand);
-                System.out.println("Number of discarded Cards: " + PlayerPile.size());
-                System.out.print(PlayerPile);
-
-            } else if (gacha == 2) { //discard card from playerhand
-
-                if (PlayerHand.isEmpty()) {
-                    System.out.println("Player's Hand is empty.");
-                    return;
-                }
-                for (int x = 0; x < numberofCards; x++) {
-                    PlayerPile.push(PlayerHand.pop());
-                }
-                System.out.println("You have discarded " + numberofCards + " cards.");
-                System.out.println("Number of Cards left: " + CardDeck.size());
-                System.out.print(CardDeck);
-                System.out.println("Number of Cards in Player Hand: " + PlayerHand.size());
-                System.out.print(PlayerHand);
-                System.out.println("Number of discarded Cards: " + PlayerPile.size());
-                System.out.print(PlayerPile);
-            } else if (gacha == 3) {
-
-                if (PlayerPile.isEmpty()) { //retrieve card from pile
-                    System.out.println("Discarded pile is empty.");
-                    return;
-                }
-                for (int x = 0; x < numberofCards; x++) {
-                    PlayerHand.push(PlayerPile.pop());
-                }
-                System.out.println("You have retrieved " + numberofCards + " cards.");
-                System.out.println("Number of Cards left: " + CardDeck.size());
-                System.out.print(CardDeck);
-                System.out.println("Number of Cards in Player Hand: " + PlayerHand.size());
-                System.out.print(PlayerHand);
-                System.out.println("Number of discarded Cards: " + PlayerPile.size());
-                System.out.print(PlayerPile);
-            }
-        }
-
-        if (CardDeck.size() == 0) {
-            System.out.println("No more cards to draw.");
-        }
-
-
-        System.out.println("Run again? Press 1 for yes, 0 for no.");
-        Scanner UserInput = new Scanner(System.in);
-
-        int input = UserInput.nextInt();
-        if (UserInput.equals("1")) {
-            return;
-        } else if (UserInput.equals("0")) {
-            System.out.println("System ended.");
-        }
-
-    }
-}*/
