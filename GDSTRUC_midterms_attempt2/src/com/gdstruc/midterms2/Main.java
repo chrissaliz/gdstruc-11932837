@@ -41,6 +41,9 @@ public class Main {
                 break;
             }
         }
+        if (CardDeck.size() == 0) {
+            System.out.println("No more cards to draw.");
+        }
     }
 
     public static void GachaInfo(Stack<String> CardDeck, Stack<String> PlayerHand, Stack<String> PlayerPile) {
@@ -67,7 +70,7 @@ public class Main {
 
     private static int numberofCards() {
         Random rand2 = new Random();
-        int x = rand2.nextInt(5);
+        int x = rand2.nextInt(5+1);
         return x;
     }
 
@@ -79,7 +82,6 @@ public class Main {
             return;
         } else if (numberofCards() > CardDeck.size()) {
             System.out.println("Number of cards to be drawn is greater than Card Deck. Adjusting...");
-            return;
         }
 
         for (int x = 0; x < numberofCards; x++) {
