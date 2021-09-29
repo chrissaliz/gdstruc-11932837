@@ -11,6 +11,4 @@ public class CardStack {
         stack = new Stack<>();
     }
 
-
-
 }

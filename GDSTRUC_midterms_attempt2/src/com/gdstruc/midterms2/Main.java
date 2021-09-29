@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class Main {
 
-
     public static void main(String[] args) {
 
         Stack<String> CardDeck = new Stack<>();
@@ -37,9 +36,10 @@ public class Main {
             if (UserInput.equals("1")) {
                 GameTurn(PlayerHand, PlayerPile, CardDeck, numberofCards());
             }
-        }
-        if (CardDeck.size() == 0) {
-            System.out.println("No more cards to draw.");
+            if (CardDeck.isEmpty()) {
+                System.out.println("No more cards to draw.");
+                break;
+            }
         }
     }
 
@@ -72,12 +72,11 @@ public class Main {
     }
 
     private static void drawCard(Stack CardDeck, Stack PlayerHand, Stack PlayerPile, int numberofCards) {
-        numberofCards = numberofCards();
 
-        if (CardDeck.isEmpty() || numberofCards() > CardDeck.size()) {
+        if (CardDeck.isEmpty() || numberofCards > CardDeck.size()) {
             System.out.println("Number of cards to be drawn is greater than Card Deck. Adjusting...");
             numberofCards = CardDeck.size();
-            System.out.println("Retrieving " + numberofCards + " instead.");
+            System.out.println("Drawing " + numberofCards + " instead.");
         }
 
         for (int x = 0; x < numberofCards; x++) {
@@ -89,12 +88,10 @@ public class Main {
     }
 
     private static void disCard(Stack CardDeck, Stack PlayerHand, Stack PlayerPile, int numberofCards) {
-        numberofCards = numberofCards();
 
-        if (PlayerHand.isEmpty() || numberofCards() > PlayerHand.size()) {
+        if (PlayerHand.isEmpty() || numberofCards > PlayerHand.size()) {
             System.out.println("Number of cards to be discarded is greater than Player Hand. Adjusting...");
             numberofCards = PlayerHand.size();
-            System.out.println("Discarding " + numberofCards + " instead.");
         }
         for (int x = 0; x < numberofCards; x++) {
             PlayerPile.push(PlayerHand.pop());
@@ -104,9 +101,8 @@ public class Main {
     }
 
     private static void retrieveCard(Stack CardDeck, Stack PlayerHand, Stack PlayerPile, int numberofCards) {
-        numberofCards = numberofCards();
 
-        if (PlayerPile.isEmpty() || numberofCards() > PlayerPile.size()) {
+        if (PlayerPile.isEmpty() || numberofCards > PlayerPile.size()) {
             System.out.println("Number of cards to be retrieved is greater than Player Pile. Adjusting...");
             numberofCards = PlayerPile.size();
             System.out.println("Retrieving " + numberofCards + " instead.");
