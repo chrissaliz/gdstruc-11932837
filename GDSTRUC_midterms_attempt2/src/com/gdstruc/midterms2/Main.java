@@ -12,7 +12,7 @@ public class Main {
         Stack<String> CardDeck = new Stack<>();
         Stack<String> PlayerHand = new Stack<>();
         Stack<String> PlayerPile = new Stack<>();
-        
+
 
         int DeckSize = 3;
 
@@ -29,28 +29,93 @@ public class Main {
             CardDeck.push("Godbrand");
         }
 
+        while (CardDeck.size() > 0) {
+            GameTurn(CardDeck, PlayerHand, PlayerPile,int numberofCards);
+        }
+    }
 
+    public static void GachaInfo(Stack<String> CardDeck, Stack<String> PlayerHand, Stack<String> PlayerPile) {
         System.out.println("Number of Cards left: " + CardDeck.size());
         System.out.print(CardDeck);
         System.out.println("Number of Cards in Player Hand: " + PlayerHand.size());
         System.out.print(PlayerHand);
         System.out.println("Number of discarded Cards: " + PlayerPile.size());
         System.out.print(PlayerPile);
+    }
 
-
+    public static void GameTurn(Stack CardDeck, Stack PlayerHand, Stack PlayerPile, int numberofCards) {
         Random rand = new Random();
         int gacha = rand.nextInt(3 + 1);
 
+        if (gacha == 1) {
+            drawCard(CardDeck, PlayerHand, PlayerPile, numberofCards);
+        } else if (gacha == 2) {
+            disCard(CardDeck, PlayerHand, PlayerPile, numberofCards);
+        } else if (gacha == 3) {
+            retrieveCard(CardDeck, PlayerHand, PlayerPile, numberofCards);
+        }
+    }
 
-        /*public static void runGacha( idk what to put here but i need it to read the CardDeck, PlayerHand, and PlayerPile...??
-        if that's possible.......) {*/
+    private static int numberofCards() {
+        Random rand2 = new Random();
+        int x = rand2.nextInt(5);
+        return x;
+    }
+
+    private static void drawCard(Stack CardDeck, Stack PlayerHand, Stack PlayerPile, int numberofCards) {
+        numberofCards();
+
+        if (CardDeck.isEmpty() || numberofCards > CardDeck.size()) {
+            System.out.println("Cannot draw card.");
+            return;
+        }
+
+        for (int x = 0; x < numberofCards; x++) {
+            PlayerHand.push(CardDeck.pop());
+        }
+
+        System.out.println("You have drawn " + numberofCards + " cards.");
+        GachaInfo(CardDeck, PlayerHand, PlayerPile);
+    }
+
+    private static void disCard(Stack CardDeck, Stack PlayerHand, Stack PlayerPile, int numberofCards) {
+        numberofCards();
+
+        if (PlayerHand.isEmpty()) {
+            System.out.println("Player's Hand is empty.");
+            return;
+        }
+        for (int x = 0; x < numberofCards; x++) {
+            PlayerPile.push(PlayerHand.pop());
+        }
+        GachaInfo(CardDeck, PlayerHand, PlayerPile);
+    }
+
+    private static void retrieveCard(Stack CardDeck, Stack PlayerHand, Stack PlayerPile, int numberofCards) {
+        if (PlayerPile.isEmpty()) { //retrieve card from pile
+            System.out.println("Discarded pile is empty.");
+            return;
+        }
+        for (int x = 0; x < numberofCards; x++) {
+            PlayerHand.push(PlayerPile.pop());
+        }
+        GachaInfo(CardDeck, PlayerHand, PlayerPile);
+    }
+
+}
+
+
+
+    /*public static void runGacha(Stack<String> CardDeck, Stack<String> PlayerHand, Stack<String> PlayerPile) {
         while (CardDeck.size() > 0) {
+
+
             Random rand2 = new Random();
             int numberofCards = rand2.nextInt(5);
 
             if (gacha == 1) { //draw card from carddeck into playerhand
 
-                if(CardDeck.isEmpty() || numberofCards > CardDeck.size()) {
+                if (CardDeck.isEmpty() || numberofCards > CardDeck.size()) {
                     System.out.println("Cannot draw card.");
                     return;
                 }
@@ -102,9 +167,9 @@ public class Main {
             }
         }
 
-            if (CardDeck.size() == 0) {
-                System.out.println("No more cards to draw.");
-            }
+        if (CardDeck.size() == 0) {
+            System.out.println("No more cards to draw.");
+        }
 
 
         System.out.println("Run again? Press 1 for yes, 0 for no.");
@@ -117,6 +182,5 @@ public class Main {
             System.out.println("System ended.");
         }
 
-        }
-
     }
+}*/
