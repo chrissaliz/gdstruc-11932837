@@ -15,7 +15,7 @@ public class ArrayQueue {
         Player newRound = new Player();
         int smth = newRound.numberofPlayers();
 
-        if (back == queue.length)
+        if (back == size())
         {
             Player[] newArray = new Player[queue.length*2];
             System.arraycopy(queue, 0, newArray, 0, queue.length);
@@ -47,7 +47,7 @@ public class ArrayQueue {
     }
 
     public int size() {
-        return back-front;
+        return back - front;
     }
 
     public int length() {
